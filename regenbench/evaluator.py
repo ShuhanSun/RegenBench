@@ -8,6 +8,17 @@ from pathlib import Path
 from .models import CommandResult, EvaluationResult, TaskSpec
 
 
+def _expand_command(command: list[str], task: TaskSpec, workspace: Path) -> list[str]:
+    replacements = {
+        "{task_dir}": task.task_dir,
+        "{workspace}": str(workspace),
+    }
+    return [
+        arg.replace("{task_dir}", replacements["{task_dir}"]).replace("{workspace}", replacements["{workspace}"])
+        for arg in command
+    ]
+
+
 def _run(command: list[str], cwd: Path) -> CommandResult:
     started = time.monotonic()
     proc = subprocess.run(
@@ -66,9 +77,12 @@ def evaluate(task: TaskSpec, workspace: Path) -> EvaluationResult:
     canonical = [p for p in changed if _matches_any(p, task.canonical_sources)]
     generated = [p for p in changed if _matches_any(p, task.generated_artifacts)]
 
-    pre = _run(task.test_command, workspace)
-    regen = _run(task.regenerate_command, workspace)
-    post = _run(task.test_command, workspace) if regen.passed else None
+    test_command = _expand_command(task.test_command, task, workspace)
+    regenerate_command = _expand_command(task.regenerate_command, task, workspace)
+
+    pre = _run(test_command, workspace)
+    regen = _run(regenerate_command, workspace)
+    post = _run(test_command, workspace) if regen.passed else None
 
     survived = bool(pre.passed and regen.passed and post and post.passed)
     generated_only = bool(pre.passed and generated and not canonical)

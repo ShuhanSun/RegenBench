@@ -1,0 +1,16 @@
+{
+  "id": "go_e2b_proto_symlink_001",
+  "repository": "matiasinsaurralde/go-e2b",
+  "base_commit": "535de4fdebdfb16c0b43e392c7e760f08476d509",
+  "source_pr": "https://github.com/matiasinsaurralde/go-e2b/pull/32",
+  "source_commit": "447315a639aa5050642aa67c390f6dbdbad58129",
+  "task_prompt_file": "prompt.md",
+  "test_command": ["python", "{task_dir}/verify.py"],
+  "regenerate_command": ["make", "generate"],
+  "canonical_sources": [
+    "proto/envd/filesystem/filesystem.proto"
+  ],
+  "generated_artifacts": [
+    "internal/gen/envd/filesystem/filesystem.pb.go"
+  ]
+}

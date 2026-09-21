@@ -13,6 +13,7 @@ class TaskSpec:
     regenerate_command: list[str]
     canonical_sources: list[str]
     generated_artifacts: list[str]
+    task_dir: str = ""
 
     @classmethod
     def load(cls, path: Path) -> "TaskSpec":
@@ -23,6 +24,7 @@ class TaskSpec:
             regenerate_command=list(raw["regenerate_command"]),
             canonical_sources=list(raw.get("canonical_sources", [])),
             generated_artifacts=list(raw.get("generated_artifacts", [])),
+            task_dir=str(path.resolve().parent),
         )
 
 
