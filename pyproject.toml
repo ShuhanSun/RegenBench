@@ -1,0 +1,8 @@
+[project]
+name = "regenbench"
+version = "0.1.0"
+description = "Benchmarking regeneration-stable source-of-truth repairs by coding agents"
+requires-python = ">=3.10"
+
+[project.scripts]
+regenbench = "regenbench.cli:main"

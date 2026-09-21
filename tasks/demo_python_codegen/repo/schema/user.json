@@ -1,0 +1,7 @@
+{
+  "class_name": "User",
+  "fields": [
+    {"name": "id", "type": "int"},
+    {"name": "name", "type": "str"}
+  ]
+}

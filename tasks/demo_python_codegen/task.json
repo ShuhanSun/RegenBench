@@ -1,0 +1,7 @@
+{
+  "id": "demo_python_codegen_001",
+  "test_command": ["python", "-m", "unittest", "discover", "-s", "tests", "-v"],
+  "regenerate_command": ["python", "tools/generate.py"],
+  "canonical_sources": ["schema/**", "tools/generate.py"],
+  "generated_artifacts": ["generated/**"]
+}
